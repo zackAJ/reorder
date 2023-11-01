@@ -7,7 +7,7 @@
   <title>Home</title>
    @vite('resources/css/app.css')
 </head>
-<body>
-  <h1>Hello world</h1>
+<body class="bg-gray-900 text-white">
+  @livewire('task')
 </body>
 </html>
