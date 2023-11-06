@@ -97,27 +97,26 @@ $swap = function (Task $task_one, Task $task_two = null) {
 ?>
 
 <div class="px-12 pt-16">
-  
+
 
   <h1 class="text-4xl m-6 text-center">Task management</h1>
   <div class="flex flex-col  items-center">
     <script defer>
-      const escapeHTML= str =>
-    str.replace(
-      /[&<>'"]/g,
-      tag =>
-        ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          "'": '&#39;',
-          '"': '&quot;'
-        }[tag] || tag)
-    );
-
+      const escapeHTML = str =>
+        str.replace(
+          /[&<>'"]/g,
+          tag =>
+          ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+          } [tag] || tag)
+        );
     </script>
     <main x-data="{
-      decode: escapeHTML
+        decode: escapeHTML
     }" class="w-full flex flex-col items-center">
       <form wire:submit.prevent="save" class="flex flex-col gap-6">
         <label for="name" class="text-lg font-bold flex justify-between gap-6 min-w-[300px]">Task
@@ -145,7 +144,7 @@ $swap = function (Task $task_one, Task $task_two = null) {
             </tr>
           @endonce
 
-          <tr x-init="edit_mode[{{ $index }}] = false" draggable="true" x-data="{ drag_over: false,new_name: '' }" 
+          <tr x-init="edit_mode[{{ $index }}] = false" draggable="true" x-data="{ drag_over: false, new_name: '' }"
             :class="{ 'w-full': true, 'border-t-[2px] border-t-white ': drag_over }" @dragenter.prevent="drag_over=true"
             @dragleave.prevent="drag_over=false"
             @dragstart="
@@ -157,16 +156,21 @@ $swap = function (Task $task_one, Task $task_two = null) {
             if(dropped_id!={{ $task->id }})
             Livewire.first().swap(dropped_id,{{ $task->id }});
             ">
-            <td class=" py-2" x-text="'{{ $index + 1 }}'" />
+            <td class='flex justify-center'>
+              <p class="text-lg font-bold text-red-900 rounded-full bg-white px-2">{{ $index + 1 }}</p>
+            </td>
 
-            <td class=" py-2" x-text="{{ $task->id }} " />
+            <td>
+              <p class="text-md font-bold text-white rounded-full  px-2">{{ $task->id }}</p>
+            </td>
 
             <td x-show="!edit_mode[{{ $index }}]" class="p-2 w-full break-words max-w-[200px]">
               {{ htmlspecialchars_decode($task->name) }}
             </td>
 
-            <td  x-show="edit_mode[{{ $index }}]" class="p-2">
-              <input class="rounded-lg text-black px-2 font-bold w-[120px]" type="text" id="name" name="name" x-model="new_name">
+            <td x-show="edit_mode[{{ $index }}]" class="p-2">
+              <input class="rounded-lg text-black px-2 font-bold w-[120px]" type="text" id="name" name="name"
+                x-model="new_name">
             </td>
 
             <td class="py-2 min-w-[120px] flex gap-1">
